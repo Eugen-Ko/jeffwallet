@@ -13,8 +13,8 @@ export function Layout() {
           ...styles.flexAround,
           width: "100%",
           height: `${headerHeight}px`,
-          backgroundColor: "blue",
-
+          backgroundColor: "#1976d2",
+          boxShadow: "0px -5px 5px -5px rgba(1, 9, 15, 0.6) inset",
           position: "fixed",
         }}
       >
@@ -23,9 +23,10 @@ export function Layout() {
       <Box sx={{ height: `${headerHeight}px` }} />
       <Box
         sx={{
+          marginTop: "20px",
           ...styles.flexAround,
+          alignItems: "start",
           height: `calc(100vh - ${headerHeight}px)`,
-          backgroundColor: "red",
         }}
       >
         <Wallet />
