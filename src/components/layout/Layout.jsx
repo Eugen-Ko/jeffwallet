@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Header } from "components/header";
-import { Wallet } from "components/wallet/Wallet";
+import { Wallet } from "components/wallet";
 import styles from "components/styles";
 
 export function Layout() {

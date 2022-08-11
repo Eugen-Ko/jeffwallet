@@ -1,4 +1,7 @@
 import { Box, Button } from "@mui/material";
+import { AmountCards } from "components/amountCards";
+import { AmountCash } from "components/amountCash";
+import { CardsList } from "components/cardsList";
 
 export const Wallet = () => {
   return (
@@ -12,51 +15,15 @@ export const Wallet = () => {
     >
       Ballance
       <Box sx={{ marginBottom: "15px" }}>
-        <Box sx={{ marginBottom: "15px" }}>
-          Amount of cards
-          <p>usd</p>
-          <p>euro</p>
-          <p>uah</p>
-        </Box>
-        <Box sx={{ marginBottom: "15px" }}>
-          Amount of cash
-          <Button variant="contained" size="small" sx={{ mr: "5px" }}>
-            deposit
-          </Button>
-          <Button variant="contained" size="small">
-            withdraw
-          </Button>
-          <p>usd</p>
-          <p>euro</p>
-          <p>uah</p>
-        </Box>
+        <AmountCards />
+        <AmountCash />
       </Box>
       <Box>
         Cards
         <Button variant="contained" size="small">
           Add card
         </Button>
-        <Box>
-          <Box
-            sx={{
-              width: "256px",
-              height: "164px",
-              border: "1px solid tomato",
-              borderRadius: "10px",
-              mt: "10px",
-              mb: "5px",
-            }}
-          ></Box>
-          <Button variant="contained" size="small" sx={{ mr: "5px" }}>
-            deposit
-          </Button>
-          <Button variant="contained" size="small" sx={{ mr: "5px" }}>
-            withdraw
-          </Button>
-          <Button variant="contained" color="error" size="small">
-            delete
-          </Button>
-        </Box>
+        <CardsList />
       </Box>
     </Box>
   );
