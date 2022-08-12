@@ -12,7 +12,6 @@ const luhn = (cardNum) => {
   let sum = 0;
 
   for (let i = temp.length - 1; i >= 0; i -= 1) {
-    console.log(i, sum, temp);
     if (i % 2 === 0) {
       sum +=
         Number(temp[i]) * 2 > 9 ? Number(temp[i]) * 2 - 9 : Number(temp[i]) * 2;
@@ -20,7 +19,6 @@ const luhn = (cardNum) => {
       sum += Number(temp[i]);
     }
   }
-  console.log(sum);
   return sum % 10 === 0 ? true : false;
 };
 

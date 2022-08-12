@@ -12,7 +12,7 @@ export const ModalAddAmount = ({
   modalAddAmount,
   setModalAddAmount,
 }) => {
-  // const allCard = useSelector(walletSelectors.getCards);
+  const allCards = useSelector(walletSelectors.getCards);
   const dispatch = useDispatch();
 
   const [amount, setAmount] = useState(0);
@@ -20,18 +20,20 @@ export const ModalAddAmount = ({
   const cash = useSelector(walletSelectors.getCash);
 
   let currentCurrencies;
+  if (idCard) {
+    const temp = allCards.find((el) => {
+      return String(el.cardNumber) === idCard ? el : null;
+    });
 
-  // if (idCard) {
-  //   const temp = allCard.filter((el) => el.cardNumber === idCard);
-  //   currentCurrencies = [{ value: temp.currency, label: temp.currency }];
-  // } else {
-  currentCurrencies =
-    modalAction === "deposit"
-      ? currencies
-      : Object.entries(cash).map((el) => {
-          return { label: el[0], value: el[0] };
-        });
-  // }
+    currentCurrencies = [{ value: temp.currency, label: temp.currency }];
+  } else {
+    currentCurrencies =
+      modalAction === "deposit"
+        ? currencies
+        : Object.entries(cash).map((el) => {
+            return { label: el[0], value: el[0] };
+          });
+  }
 
   const [currency, setCurrency] = useState(currentCurrencies[0].label);
 
@@ -57,12 +59,17 @@ export const ModalAddAmount = ({
         toast.error("Antung!!! You don't have that much money ");
         return;
       }
-      dispatch(walletOperations.downAmountCash({ currency, amount }));
+
+      if (!idCard)
+        dispatch(walletOperations.downAmountCash({ currency, amount }));
+      else dispatch(walletOperations.downAmountCard({ idCard, amount }));
       handleClose();
       return;
     }
 
-    dispatch(walletOperations.addAmountCash({ currency, amount }));
+    if (!idCard) dispatch(walletOperations.addAmountCash({ currency, amount }));
+    else dispatch(walletOperations.addAmountCard({ idCard, amount }));
+
     handleClose();
   };
 

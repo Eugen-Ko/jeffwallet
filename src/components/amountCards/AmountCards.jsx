@@ -3,7 +3,6 @@ import { Box, Typography } from "@mui/material";
 import { walletSelectors } from "redux/wallet";
 
 const createBalance = (allCard) => {
-  console.log(allCard);
   const acc = {};
   allCard.forEach((el) => {
     acc[el.currency]
@@ -15,7 +14,6 @@ const createBalance = (allCard) => {
 
 export const AmountCards = () => {
   const allCard = useSelector(walletSelectors.getCards);
-  console.log(allCard);
 
   const balance = createBalance(allCard);
 

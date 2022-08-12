@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import { BASEURL } from 'assets/settings';
 
 const makeCardInfo = (card, addInfo) => {
-  console.log(addInfo);
   return {
     cardNumber: card.cardNumber,
     expData: card.expData,
@@ -26,8 +25,16 @@ const addCard = (card) => async (dispatch) => {
   catch (error) { toast.error(`${error.message}`) }
 }
 
-const addAmountCard = (card) => dispatch => {
-  dispatch(walletActions.addAmountCardSuccess(card))
+const addAmountCard = ({ idCard, amount }) => dispatch => {
+  dispatch(walletActions.addAmountCardSuccess({ idCard, amount }))
+}
+
+const downAmountCard = ({ idCard, amount }) => dispatch => {
+  dispatch(walletActions.downAmountCardSuccess({ idCard, amount }))
+}
+
+const deleteCard = ({ idCard }) => dispatch => {
+  dispatch(walletActions.deleteCardSuccess({ idCard }))
 }
 
 const addAmountCash = (amount) => dispatch => {
@@ -42,6 +49,9 @@ const walletOperations = {
   addCard,
   addAmountCash,
   downAmountCash,
+  addAmountCard,
+  downAmountCard,
+  deleteCard,
 }
 
 export default walletOperations
