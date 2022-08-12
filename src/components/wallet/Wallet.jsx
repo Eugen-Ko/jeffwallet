@@ -11,7 +11,6 @@ export const Wallet = () => {
     <Box
       sx={{
         width: { xs: "100%", sm: "600px", md: "900px", lg: "1200px" },
-        backgroundColor: "violet",
         padding: "15px",
         marginBottom: "15px",
       }}

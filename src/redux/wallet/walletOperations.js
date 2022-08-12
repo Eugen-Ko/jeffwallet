@@ -1,7 +1,8 @@
 import walletActions from './walletActions';
 
 const addCard = (card) => dispatch => {
-  dispatch(walletActions.addCard(card));
+  console.log(card);
+  dispatch(walletActions.addCardSuccess(card));
 }
 
 const addAmountCash = (amount) => dispatch => {
@@ -12,10 +13,10 @@ const downAmountCash = (amount) => dispatch => {
   dispatch(walletActions.downAmountCashSuccess(amount));
 }
 
-const raceOperations = {
+const walletOperations = {
   addCard,
   addAmountCash,
   downAmountCash,
 }
 
-export default raceOperations
+export default walletOperations

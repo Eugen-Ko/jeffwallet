@@ -2,17 +2,16 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { createReducer } from '@reduxjs/toolkit';
 import walletActions from './walletActions';
 
-const cardInitialState = {};
+const cardInitialState = [];
 
 const cashInitialState = {};
 
 const cardState = createReducer(cardInitialState, {
-  // [walletActions.addAmountCashSuccess]: (state, { payload }) => {
-  //   console.log(payload);
-  //   return { ...state, cash: payload[1] }
-  // },
+  [walletActions.addCardSuccess]: (state, { payload }) => {
+    // state.cardState.push(payload);
+    return [...state, { ...payload }]
+  },
 });
-
 
 const cashState = createReducer(cashInitialState, {
   [walletActions.addAmountCashSuccess]: (state, { payload }) => {
