@@ -2,7 +2,8 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { createReducer } from '@reduxjs/toolkit';
 import walletActions from './walletActions';
 
-const cardInitialState = [
+const cardInitialState = {
+  cards:[
   {
     cardNumber: 1234567891234567,
     expData: "02/25",
@@ -36,7 +37,7 @@ const cardInitialState = [
     scheme: "visa",
     type: "NoName",
   }
-]
+  ]}
 
 const cashInitialState = {};
 

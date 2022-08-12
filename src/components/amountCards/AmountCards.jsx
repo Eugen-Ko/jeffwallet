@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { walletSelectors } from "redux/wallet";
 
 const createBalance = (allCard) => {
+  console.log(allCard);
   const acc = {};
   allCard.forEach((el) => {
     acc[el.currency]
@@ -14,12 +15,13 @@ const createBalance = (allCard) => {
 
 export const AmountCards = () => {
   const allCard = useSelector(walletSelectors.getCards);
+  console.log(allCard);
 
   const balance = createBalance(allCard);
 
   return (
     <Box sx={{ marginBottom: "15px" }}>
-      Amount of cards
+      <Typography sx={{ fontWeight: "bold" }}>Amount of cards</Typography>
       {Object.entries(balance).map((el) => (
         <Typography key={el[0]}>
           {el[0]}: {el[1]}

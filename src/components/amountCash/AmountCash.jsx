@@ -15,7 +15,14 @@ export const AmountCash = () => {
   return (
     <>
       <Box sx={{ marginBottom: "30px" }}>
-        <Typography>Amount of cash</Typography>
+        <Typography sx={{ fontWeight: "bold" }}>Amount of cash</Typography>
+        <Box>
+          {Object.entries(cash).map((el) => (
+            <Typography key={el[0]}>
+              {el[0]}: {el[1]}
+            </Typography>
+          ))}
+        </Box>
         <Button
           variant="contained"
           size="small"
@@ -38,13 +45,6 @@ export const AmountCash = () => {
         >
           withdraw
         </Button>
-        <Box>
-          {Object.entries(cash).map((el) => (
-            <Typography key={el[0]}>
-              {el[0]}: {el[1]}
-            </Typography>
-          ))}
-        </Box>
       </Box>
       {modalAddAmount && (
         <ModalAddAmount
