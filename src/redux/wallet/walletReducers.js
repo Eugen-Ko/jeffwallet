@@ -44,6 +44,9 @@ const cardState = createReducer(cardInitialState, {
   [walletActions.addCardSuccess]: (state, { payload }) => {
     return [...state, { ...payload }]
   },
+  [walletActions.addAmountCardSuccess]: (state, { payload }) => {
+    return { ...state }
+  },
 });
 
 const cashState = createReducer(cashInitialState, {

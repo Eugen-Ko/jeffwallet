@@ -26,6 +26,10 @@ const addCard = (card) => async (dispatch) => {
   catch (error) { toast.error(`${error.message}`) }
 }
 
+const addAmountCard = (card) => dispatch => {
+  dispatch(walletActions.addAmountCardSuccess(card))
+}
+
 const addAmountCash = (amount) => dispatch => {
   dispatch(walletActions.addAmountCashSuccess(amount));
 }

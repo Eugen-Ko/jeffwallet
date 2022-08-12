@@ -7,22 +7,31 @@ import { modalStyle } from "components/styles/styles";
 import { toast } from "react-hot-toast";
 
 export const ModalAddAmount = ({
+  idCard = null,
   modalAction,
   modalAddAmount,
   setModalAddAmount,
 }) => {
+  // const allCard = useSelector(walletSelectors.getCards);
   const dispatch = useDispatch();
 
   const [amount, setAmount] = useState(0);
 
   const cash = useSelector(walletSelectors.getCash);
 
-  const currentCurrencies =
+  let currentCurrencies;
+
+  // if (idCard) {
+  //   const temp = allCard.filter((el) => el.cardNumber === idCard);
+  //   currentCurrencies = [{ value: temp.currency, label: temp.currency }];
+  // } else {
+  currentCurrencies =
     modalAction === "deposit"
       ? currencies
       : Object.entries(cash).map((el) => {
           return { label: el[0], value: el[0] };
         });
+  // }
 
   const [currency, setCurrency] = useState(currentCurrencies[0].label);
 

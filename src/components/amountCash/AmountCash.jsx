@@ -14,8 +14,8 @@ export const AmountCash = () => {
   };
   return (
     <>
-      <Box sx={{ marginBottom: "15px" }}>
-        Amount of cash:
+      <Box sx={{ marginBottom: "30px" }}>
+        <Typography>Amount of cash</Typography>
         <Button
           variant="contained"
           size="small"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { AmountCards } from "components/amountCards";
 import { AmountCash } from "components/amountCash";
 import { CardsList } from "components/cardsList";
@@ -15,20 +15,22 @@ export const Wallet = () => {
         marginBottom: "15px",
       }}
     >
-      Ballance
+      <Typography sx={{ mb: "10px", mr: "10px" }}>Ballance</Typography>
       <Box sx={{ marginBottom: "15px" }}>
         <AmountCards />
         <AmountCash />
       </Box>
       <Box>
-        Cards
-        <Button
-          variant="contained"
-          size="small"
-          onClick={() => setModalAddCard(true)}
-        >
-          Add card
-        </Button>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography sx={{ mr: "124px" }}>Cards</Typography>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setModalAddCard(true)}
+          >
+            Add card
+          </Button>
+        </Box>
         {modalAddCard && (
           <ModalAddCard
             modalAddCard={modalAddCard}
