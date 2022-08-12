@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Box, Button } from "@mui/material";
 import { AmountCards } from "components/amountCards";
 import { AmountCash } from "components/amountCash";
 import { CardsList } from "components/cardsList";
+import { ModalAddCard } from "components/modalAddCard";
 
 export const Wallet = () => {
+  const [modalAddCard, setModalAddCard] = useState(false);
   return (
     <Box
       sx={{
@@ -20,9 +23,19 @@ export const Wallet = () => {
       </Box>
       <Box>
         Cards
-        <Button variant="contained" size="small">
+        <Button
+          variant="contained"
+          size="small"
+          onClick={() => setModalAddCard(true)}
+        >
           Add card
         </Button>
+        {modalAddCard && (
+          <ModalAddCard
+            modalAddCard={modalAddCard}
+            setModalAddCard={setModalAddCard}
+          />
+        )}
         <CardsList />
       </Box>
     </Box>
