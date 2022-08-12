@@ -16,6 +16,7 @@ export function Layout() {
           backgroundColor: "#1976d2",
           boxShadow: "0px -5px 5px -5px rgba(1, 9, 15, 0.6) inset",
           position: "fixed",
+          zIndex: 500,
         }}
       >
         <Header />

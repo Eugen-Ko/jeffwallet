@@ -5,6 +5,24 @@ import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { modalCardStyle } from "components/styles/styles";
 import { currencies } from "assets/currencies";
 import { walletOperations } from "redux/wallet";
+import toast from "react-hot-toast";
+
+const luhn = (cardNum) => {
+  let temp = [...String(cardNum)];
+  let sum = 0;
+
+  for (let i = temp.length - 1; i >= 0; i -= 1) {
+    console.log(i, sum, temp);
+    if (i % 2 === 0) {
+      sum +=
+        Number(temp[i]) * 2 > 9 ? Number(temp[i]) * 2 - 9 : Number(temp[i]) * 2;
+    } else {
+      sum += Number(temp[i]);
+    }
+  }
+  console.log(sum);
+  return sum % 10 === 0 ? true : false;
+};
 
 const validateRegister = (values) => {
   const errors = {};
@@ -15,9 +33,7 @@ const validateRegister = (values) => {
   }
   if (!values.expData) {
     errors.expData = "Require";
-  } else if (
-    !/[0-1]{1}[0-9]{1}\/[2]{1}[0]{1}[2]{1}[2-9]{1}$/i.test(values.expData)
-  ) {
+  } else if (!/[0-1]{1}[0-9]{1}\/[2]{1}[2-9]{1}$/i.test(values.expData)) {
     errors.expData = "Wrong exp data";
   }
   if (!values.cv) {
@@ -58,7 +74,10 @@ export const ModalAddCard = ({ modalAddCard, setModalAddCard }) => {
       { cardNumber, expData, cv, cardHolder, amount },
       { resetForm }
     ) => {
-      console.log(currency);
+      if (!luhn(cardNumber)) {
+        toast.error("You made a mistake in the card number");
+        return;
+      }
       const card = {
         cardNumber,
         expData,
@@ -67,8 +86,8 @@ export const ModalAddCard = ({ modalAddCard, setModalAddCard }) => {
         amount,
         currency: currency,
       };
-      console.log(card);
       dispatch(walletOperations.addCard({ ...card }));
+      handleClose();
       resetForm({ initialValues });
     },
   });
@@ -112,7 +131,8 @@ export const ModalAddCard = ({ modalAddCard, setModalAddCard }) => {
                   variant="standard"
                   name="expData"
                   type="text"
-                  label="Exp.Data"
+                  // label="Exp.Data"
+                  placeholder="Exp. Date"
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   error={
@@ -126,7 +146,8 @@ export const ModalAddCard = ({ modalAddCard, setModalAddCard }) => {
                   variant="standard"
                   name="cv"
                   type="text"
-                  label="CV"
+                  // label="CV"
+                  placeholder="CV"
                   value={formik.values.cv}
                   onChange={formik.handleChange}
                   error={formik.touched.cv && Boolean(formik.errors.cv)}
@@ -138,7 +159,8 @@ export const ModalAddCard = ({ modalAddCard, setModalAddCard }) => {
                   variant="standard"
                   name="cardHolder"
                   type="text"
-                  label="Card Holder"
+                  // label="Card Holder"
+                  placeholder="Card Holder"
                   value={formik.values.cardHolder}
                   onChange={formik.handleChange}
                   error={
@@ -155,6 +177,7 @@ export const ModalAddCard = ({ modalAddCard, setModalAddCard }) => {
                   variant="standard"
                   name="amount"
                   type="number"
+                  // label="Amount"
                   label="Amount"
                   min="0"
                   value={formik.values.amount}
