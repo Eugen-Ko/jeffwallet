@@ -1,5 +1,5 @@
-const getCards = state => state.wallet.walletState.cards;
-const getCash = state => state.wallet.walletState.cash;
+const getCards = state => state.wallet.cardState;
+const getCash = state => state.wallet.cashState;
 
 const raceSelectors = {
   getCards,

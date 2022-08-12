@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { Box, Button, Typography } from "@mui/material";
 import { ModalAddAmount } from "components/modalAddAmount";
+import { walletSelectors } from "redux/wallet";
 
 export const AmountCash = () => {
   const [modalAddAmount, setModalAddAmount] = useState(false);
   const [modalAction, setModalAction] = useState(null);
+  const cash = useSelector(walletSelectors.getCash);
 
   const onClickOpenModalAddAmount = () => {
     setModalAddAmount(true);
@@ -12,7 +15,7 @@ export const AmountCash = () => {
   return (
     <>
       <Box sx={{ marginBottom: "15px" }}>
-        Amount of cash
+        Amount of cash:
         <Button
           variant="contained"
           size="small"
@@ -25,6 +28,7 @@ export const AmountCash = () => {
           deposit
         </Button>
         <Button
+          disabled={Object.keys(cash).length === 0 ? true : false}
           variant="contained"
           size="small"
           onClick={() => {
@@ -34,6 +38,13 @@ export const AmountCash = () => {
         >
           withdraw
         </Button>
+        <Box>
+          {Object.entries(cash).map((el) => (
+            <Typography key={el[0]}>
+              {el[0]}: {el[1]}
+            </Typography>
+          ))}
+        </Box>
       </Box>
       {modalAddAmount && (
         <ModalAddAmount

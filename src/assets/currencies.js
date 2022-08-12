@@ -1,26 +1,26 @@
 export const currencies = [
   {
     value: 'UAH',
-    label: '₴ (UAH)',
+    label: 'UAH',
   },
   {
     value: 'EUR',
-    label: '€ (EUR)',
+    label: 'EUR',
   },
   {
     value: 'USD',
-    label: '$ (USD)',
+    label: 'USD',
   },
   {
     value: 'GBP',
-    label: '£ (GBP)',
+    label: 'GBP',
   },
   {
     value: 'JPY',
-    label: '¥ (JPY)',
+    label: 'JPY',
   },
   {
     value: 'BTC',
-    label: '฿ (BTC)',
+    label: 'BTC',
   },
 ];

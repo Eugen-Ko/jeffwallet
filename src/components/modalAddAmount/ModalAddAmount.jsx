@@ -1,28 +1,66 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Modal, Box, Typography, TextField, Button } from "@mui/material";
+import { walletOperations, walletSelectors } from "redux/wallet";
 import { currencies } from "assets/currencies";
 import { modalStyle } from "components/styles/styles";
+import { toast } from "react-hot-toast";
 
 export const ModalAddAmount = ({
   modalAction,
   modalAddAmount,
   setModalAddAmount,
 }) => {
-  const [currency, setCurrency] = useState("UAH");
+  const dispatch = useDispatch();
+
   const [amount, setAmount] = useState(0);
+
+  const cash = useSelector(walletSelectors.getCash);
+
+  const currentCurrencies =
+    modalAction === "deposit"
+      ? currencies
+      : Object.entries(cash).map((el) => {
+          return { label: el[0], value: el[0] };
+        });
+
+  const [currency, setCurrency] = useState(currentCurrencies[0].label);
 
   const handleClose = () => {
     setModalAddAmount(false);
   };
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const onChangeCurrency = (e) => {
+    setCurrency(e.currentTarget.value);
+  };
+
+  const onChangeAmount = (e) => {
+    setAmount(Number(e.target.value));
+  };
+
+  const onClickAccept = () => {
+    if (modalAction === "withdraw") {
+      if (amount < 0) {
+        toast.error("Antung!!! The negative number");
+        return;
+      }
+      if (amount > cash[currency]) {
+        toast.error("Antung!!! You don't have that much money ");
+        return;
+      }
+      dispatch(walletOperations.downAmountCash({ currency, amount }));
+      handleClose();
+      return;
+    }
+
+    dispatch(walletOperations.addAmountCash({ currency, amount }));
+    handleClose();
   };
 
   return (
     <Modal
       open={modalAddAmount}
-      // onClose={handleClose}
+      onClose={handleClose}
       aria-labelledby={modalAction}
     >
       <Box sx={modalStyle}>
@@ -34,7 +72,7 @@ export const ModalAddAmount = ({
             id="standard-select-currency-native"
             select
             value={currency}
-            onChange={handleChange}
+            onChange={onChangeCurrency}
             SelectProps={{
               native: true,
             }}
@@ -42,8 +80,8 @@ export const ModalAddAmount = ({
             variant="standard"
             sx={{ mr: "10px" }}
           >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
+            {currentCurrencies.map((option) => (
+              <option key={option.label} value={option.value}>
                 {option.label}
               </option>
             ))}
@@ -51,16 +89,12 @@ export const ModalAddAmount = ({
 
           <TextField
             placeholder="0"
-            // onChange={handleChange}
+            onChange={onChangeAmount}
             helperText="InputAmount"
             variant="standard"
-          >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </TextField>
+            type="number"
+            min="0"
+          ></TextField>
         </Box>
 
         <Box>
@@ -72,7 +106,11 @@ export const ModalAddAmount = ({
           >
             Cancel
           </Button>
-          <Button onClick={handleClose} variant="contained" size="small">
+          <Button
+            onClick={() => onClickAccept()}
+            variant="contained"
+            size="small"
+          >
             Accept
           </Button>
         </Box>
@@ -80,40 +118,3 @@ export const ModalAddAmount = ({
     </Modal>
   );
 };
-
-// <div>
-//   {/* <Dialog
-//     open={modalAddAmount}
-//     TransitionComponent={Transition}
-//     keepMounted
-//     onClose={handleClose}
-//     aria-describedby="alert-dialog-slide-description"
-//   > */}
-//   <DialogTitle>{`Enter the amount to ${modalAction} money`}</DialogTitle>
-//   {/* <DialogContent> */}
-// <TextField
-//   id="standard-select-currency-native"
-//   select
-//   label="Native select"
-//   value={currency}
-//   onChange={handleChange}
-//   SelectProps={{
-//     native: true,
-//   }}
-//   helperText="Please select your currency"
-//   variant="standard"
-// >
-//   {currencies.map((option) => (
-//     <option key={option.value} value={option.value}>
-//       {option.label}
-//     </option>
-//   ))}
-// </TextField>
-//   {/* textfield */}
-//   {/* </DialogContent> */}
-//   {/* <DialogActions>
-//       <Button onClick={handleClose}>Disagree</Button>
-//       <Button onClick={handleClose}>Agree</Button>
-//     </DialogActions> */}
-//   {/* </Dialog> */}
-// </div>;

@@ -2,15 +2,34 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { createReducer } from '@reduxjs/toolkit';
 import walletActions from './walletActions';
 
-const walletInitialState = {
-  cards: [],
-  cash: [],
-};
+const cardInitialState = {};
 
-const walletState = createReducer(walletInitialState, {
-  [walletActions.setPlayerNameSuccess]: (state, { payload }) => {
-    return { ...state, playerName: payload }
+const cashInitialState = {};
+
+const cardState = createReducer(cardInitialState, {
+  // [walletActions.addAmountCashSuccess]: (state, { payload }) => {
+  //   console.log(payload);
+  //   return { ...state, cash: payload[1] }
+  // },
+});
+
+
+const cashState = createReducer(cashInitialState, {
+  [walletActions.addAmountCashSuccess]: (state, { payload }) => {
+    return { ...state, [payload.currency]: state[payload.currency] ? state[payload.currency] + payload.amount : payload.amount }
   },
+  [walletActions.downAmountCashSuccess]: (state, { payload }) => {
+    let k = {}
+    if (state[payload.currency] - payload.amount > 0) {
+      k = { ...state, [payload.currency]: state[payload.currency] - payload.amount }
+    } else {
+      k = { ...state }
+      delete k[payload.currency]
+    }
+    return k
+
+  }
+
 });
 
 // const loading = createReducer(false, {
@@ -20,7 +39,8 @@ const walletState = createReducer(walletInitialState, {
 // });
 
 export default combineReducers({
-  walletState,
+  cardState,
+  cashState,
   // loading,
   // error,
 });
