@@ -54,7 +54,7 @@ const cardState = createReducer(cardInitialState, {
         : el)
     }
   },
-  [walletActions.addAmountCardSuccess]: (state, { payload }) => {
+  [walletActions.downAmountCardSuccess]: (state, { payload }) => {
     return {
       ...state, cards: state.cards.map(el => String(el.cardNumber) === String(payload.idCard)
         ? { ...el, amount: el.amount - payload.amount }
