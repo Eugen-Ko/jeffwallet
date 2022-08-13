@@ -19,9 +19,11 @@ export const ModalAddAmount = ({
 
   const cash = useSelector(walletSelectors.getCash);
 
+  let temp;
+
   let currentCurrencies;
   if (idCard) {
-    const temp = allCards.find((el) => {
+    temp = allCards.find((el) => {
       return String(el.cardNumber) === idCard ? el : null;
     });
 
@@ -59,10 +61,16 @@ export const ModalAddAmount = ({
         toast.error("Antung!!! You don't have that much money ");
         return;
       }
+      if (amount > temp.amount) {
+        toast.error("Antung!!! You don't have that much money ");
+        return;
+      }
 
       if (!idCard)
         dispatch(walletOperations.downAmountCash({ currency, amount }));
-      else dispatch(walletOperations.downAmountCard({ idCard, amount }));
+      else {
+        dispatch(walletOperations.downAmountCard({ idCard, amount }));
+      }
       handleClose();
       return;
     }

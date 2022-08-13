@@ -17,7 +17,7 @@ export const CardItem = ({ el }) => {
     setModalAddAmount(true);
   };
   const onClickOpenModalDownAmount = (e) => {
-    setModalAction("deposit");
+    setModalAction("withdraw");
     setIdCard(e.target.id);
     setModalAddAmount(true);
   };
