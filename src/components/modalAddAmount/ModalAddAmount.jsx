@@ -18,7 +18,6 @@ export const ModalAddAmount = ({
   const [amount, setAmount] = useState(0);
 
   const cash = useSelector(walletSelectors.getCash);
-
   let temp;
 
   let currentCurrencies;
@@ -26,7 +25,6 @@ export const ModalAddAmount = ({
     temp = allCards.find((el) => {
       return String(el.cardNumber) === idCard ? el : null;
     });
-
     currentCurrencies = [{ value: temp.currency, label: temp.currency }];
   } else {
     currentCurrencies =
@@ -61,9 +59,11 @@ export const ModalAddAmount = ({
         toast.error("Antung!!! You don't have that much money ");
         return;
       }
-      if (amount > temp.amount) {
-        toast.error("Antung!!! You don't have that much money ");
-        return;
+      if (idCard) {
+        if (amount > temp.amount) {
+          toast.error("Antung!!! You don't have that much money ");
+          return;
+        }
       }
 
       if (!idCard)
